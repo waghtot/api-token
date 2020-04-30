@@ -22,43 +22,41 @@ class Master extends Controller
             {
                 switch($data->action)
                 {
-                    case 'Login':
-                        $data->config = $this->configLogin($data);
-                        echo json_encode($this->validateInput($data->config));
+                    case 'Create':
+                        $this->createToken();
+                    break;
+                    case 'Update':
+                        $this->updateToken();
+                    break;
+                    case 'Get':
+                        $this->getToken();
+                    break;
+                    case 'Destroy':
+                        $this->destroyToken();
                     break;
                 }
             }
         }
     }
 
-    private function configLogin($input)
+    private function createToken()
     {
-        $cnf = json_decode(ConfigurationCheck::index($input));
-        if(!empty($cnf))
-        {
-            unset($input->action);
-            unset($input->params->projectId);
-            $data = new stdClass();
-            $data->find = $input->params;
-            $data->cnf = $cnf;
-            return $data;
-        }
 
-        return false;
     }
 
-    private function validateInput($input)
+    private function updateToken()
     {
-        $valid = new Validation();
-        $res = $valid->index($input);
-        error_log('validateInput($input): '.print_r($res, 1));
-        if(!empty($res))
-        {
-            return $res;
-        }else{
-            return false;
-        }
-    
+        
+    }
+
+    private function getToken()
+    {
+        
+    }
+
+    private function destroyToken()
+    {
+        
     }
 
 }
