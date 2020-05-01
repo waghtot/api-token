@@ -17,13 +17,13 @@ class Master extends Controller
         {
 
             $data = $this->getRequest();
-
+            error_log('incomming data: '.print_r($data, 1));
             if(isset($data->action))
             {
                 switch($data->action)
                 {
                     case 'Create':
-                        $this->createToken();
+                        echo json_encode($this->createToken());
                     break;
                     case 'Update':
                         $this->updateToken();
@@ -41,7 +41,14 @@ class Master extends Controller
 
     private function createToken()
     {
-
+        $data = new stdClass();
+        $data->api = 'database';
+        $data->connection = 'CORE';
+        $data->procedure = __FUNCTION__;
+        $data->params->UserID = $this->getRequest()->UserId;
+        $data->params->projectId = $this->getRequest()->projectId;
+        $res = json_decode(API_model::doAPI($data));
+        return $res[0];
     }
 
     private function updateToken()
