@@ -17,7 +17,7 @@ class Master extends Controller
         {
 
             $data = $this->getRequest();
-            error_log('incomming data: '.print_r($data, 1));
+
             if(isset($data->action))
             {
                 switch($data->action)
@@ -30,6 +30,9 @@ class Master extends Controller
                     break;
                     case 'Get':
                         $this->getToken();
+                    break;
+                    case 'Reset Password':
+                        echo json_encode($this->getcheckToken());
                     break;
                     case 'Destroy':
                         $this->destroyToken();
@@ -59,6 +62,19 @@ class Master extends Controller
     private function getToken()
     {
         
+    }
+
+    private function getcheckToken()
+    {
+        $data = new stdClass();
+        $data->api = 'database';
+        $data->connection = 'CORE';
+        $data->procedure = __FUNCTION__;
+        $data->params->action = $this->getRequest()->action;
+        $data->params->token = $this->getRequest()->token;
+        $data->params->projectId = $this->getRequest()->projectId;
+        $res = json_decode(API_model::doAPI($data));
+        return $res[0];   
     }
 
     private function destroyToken()
