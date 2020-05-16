@@ -50,7 +50,7 @@ class Master extends Controller
         $data->procedure = __FUNCTION__;
         $data->params->UserID = $this->getRequest()->UserId;
         $data->params->projectId = $this->getRequest()->projectId;
-        $res = json_decode(API_model::doAPI($data));
+        $res = json_decode(ApiModel::doAPI($data));
         return $res[0];
     }
 
@@ -73,7 +73,7 @@ class Master extends Controller
         $data->params->action = $this->getRequest()->action;
         $data->params->token = $this->getRequest()->token;
         $data->params->projectId = $this->getRequest()->projectId;
-        $res = json_decode(API_model::doAPI($data));
+        $res = json_decode(ApiModel::doAPI($data));
         return $res[0];   
     }
 
